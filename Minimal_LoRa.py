@@ -1,6 +1,6 @@
 import time, board, busio, digitalio, adafruit_ssd1306, neopixel
 import adafruit_rfm9x, aesio, json
-from binascii import hexlify
+from myUtils import hexDump
 
 transmit_interval = 30
 cipher = aesio.AES(b'YELLOW SUBMARINEENIRAMBUS WOLLEY', aesio.MODE_ECB)
@@ -17,40 +17,6 @@ rfm9x=0
 TRNG = 0
 TRNG_index = 0
 
-def hexDump(buf):
-  alphabet=b'0123456789abcdef'
-  ln = len(buf)
-  print("Len of buf: "+str(ln))
-  print("   +------------------------------------------------+ +----------------+")
-  print("   |.0 .1 .2 .3 .4 .5 .6 .7 .8 .9 .a .b .c .d .e .f | |      ASCII     |")
-  i = 0
-  while i < ln:
-    if i % 128 == 0:
-      print("   +------------------------------------------------+ +----------------+")
-    s=b'|                                                | |................|'
-    s0=list(s)
-    ix = 1
-    iy = 52
-    j=0
-    while j < 16:
-      if (i + j) < ln:
-        c=buf[i+j]
-        s0[ix] = alphabet[(c >> 4) & 0x0F]
-        ix += 1
-        s0[ix] = alphabet[c & 0x0F]
-        ix += 2
-        if (c > 31 and c < 127):
-          s0[iy] = c
-        iy += 1
-      j += 1
-    index = int(i / 16)
-    hd=("00"+hex(index)[2:])[-2:]+"."
-    s=bytearray(s0)
-    s = hd+s.decode()
-    print(s)
-    i += 16
-  print("   +------------------------------------------------+ +----------------+")
-  
 def decryptBuffer(inp, cipher):
   i=0
   j=len(inp)
@@ -90,6 +56,7 @@ def encryptBuffer(inp, cipher):
   return finalBuff
   
 def prepPacket(cnt):
+  global TRNG, TRNG_index
   packet={}
   packet['cmd']='ping'  
   UUID = "0000000"+hex(TRNG[TRNG_index]<<24|TRNG[TRNG_index+1]<<16|TRNG[TRNG_index+2]<<8|TRNG[TRNG_index+3])[2:]
@@ -171,7 +138,7 @@ if __name__ == "__main__":
   # send a first broadcast message
   sendPacket()
   # initialize timer
-  time_now = time.monotonic() - transmit_interval
+  time_now = time.monotonic()
   while True:
     if time.monotonic() - time_now > transmit_interval:
       # send a broadcast message
