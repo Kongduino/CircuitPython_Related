@@ -34,6 +34,10 @@ It requires my version of `adafruit_rfm9x.py` of course...
 
 ![LoRa_Packet](assets/LoRa_Packet.jpg)
 
+
+![PING_PONG](assets/PING_PONG.png)
+
+
 ## lights_control.py
 
 Playing with LEDs and the Neopixel.
