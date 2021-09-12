@@ -30,6 +30,10 @@ Work in progress. [Minimal_LoRa](https://github.com/Kongduino/BastWAN_Minimal_Lo
   * X11: MOSI
   * X12: DIO0 [unused] [for now] [we'll see about that]
 
+It requires my version of `adafruit_rfm9x.py` of course...
+
+![LoRa_Packet](assets/LoRa_Packet.jpg)
+
 ## lights_control.py
 
 Playing with LEDs and the Neopixel.
