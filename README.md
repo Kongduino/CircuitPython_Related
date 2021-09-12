@@ -16,6 +16,9 @@ A short library for SeeedStudio's PM2.5 Laser Sensor. Basic demo code is in `tes
 
 ![pyBoard and HM3301](assets/pyBoard%20and%20HM3301.jpg)
 
+![HM3301_Output](assets/HM3301_Output.png)
+
+
 ## Minimal_LoRa.py
 
 Work in progress. [Minimal_LoRa](https://github.com/Kongduino/BastWAN_Minimal_LoRa)-compatible basic LoRa functions for a Semtech SX1276 chip connected to pins:
